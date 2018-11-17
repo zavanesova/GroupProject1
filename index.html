@@ -10,13 +10,31 @@
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
 
     <!-- Firebase Reference -->
     <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
 
     <!-- Moment.js Reference -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+
+    <!-- YouTube API Key
+    AIzaSyDX_QGqwM5xSJdZ532VP3y6c34JQPeMoDs -->
+    
+    <!-- YouTube Client Id
+    794597330949-7ofcqkrrs5pdpk3emm5phrjd8htj1otv.apps.googleusercontent.com -->
+
+    <!-- YouTube Client Secret
+    ghFeyXPZNGahYtdzrNCjKMHU -->
+
+    <!-- YouTube Service Acct Key
+    GroupProject1-MoodList-82cb1134fa76.json 
+    
+    allows access to your cloud resources -->
+
+
 </head>
 
 <body>
@@ -27,6 +45,29 @@
             <h1 class="text-center">MoodList</h1>
             <h3 class="text-center">Use the dropdown box to get started</h3>
         </div>
+
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                Select Mood
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="Happy">Happy</a>
+                <a class="dropdown-item" href="#">Sad</a>
+                <a class="dropdown-item" href="#">Mad</a>
+                <a class="dropdown-item" href="#">Party</a>
+                <a class="dropdown-item" href="#">Mellow</a>
+                <a class="dropdown-item" href="#">Focused</a>
+                <a class="dropdown-item" href="#">-----</a>
+            </div>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+            crossorigin="anonymous"></script>
 
 </body>
 
