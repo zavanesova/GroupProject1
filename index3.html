@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Mood List</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <link href="css/grayscale.min.css" rel="stylesheet">
+
+  </head>
+
+  <body id="page-top">
+
+    <!-- Header -->
+    <header class="masthead">
+      <div class="container d-flex h-100 align-items-center">
+        <div class="mx-auto text-center">
+          <h1 class="mx-auto my-0 text-uppercase">MoodList</h1>
+          <h2 class="text-white-50 mx-auto mt-2 mb-5">A playlist for your mood.</h2>
+          
+          <div class="btn-group">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Select Mood
+                </button>
+                <div class="dropdown-menu dropdown-menu-right">
+                  <button class="dropdown-item" type="button">Happy</button>
+                  <button class="dropdown-item" type="button">Sad</button>
+                  <button class="dropdown-item" type="button">Anxious</button>
+                  <button class="dropdown-item" type="button">Depressed</button>
+                  <button class="dropdown-item" type="button">Relaxed</button>
+                  <button class="dropdown-item" type="button">Pumped</button>
+                  <button class="dropdown-item" type="button">Sleepy</button>
+                  <button class="dropdown-item" type="button">Angry</button>
+                  <button class="dropdown-item" type="button">Something else</button>
+                  <input id="playlist-id" type="text" class="form-control" aria-label="Text input with segmented button dropdown" placeholder="Enter your mood">
+                
+                </div>
+                <!-- <button type="button" id="playlist-button">Submit</button> -->
+              </div>
+
+
+
+        </div>
+
+        </div>
+        
+        
+        <h3 id="playlist-title"></h3>
+          <p id="playlist-description"></p>
+          <div id="playlist-container">
+            <span id="status">No Videos yet</span>
+          </div>
+      
+    </div>
+    
+          
+    
+    
+    </header>
+
+    </div>
+    </section>
+
+   <!-- Footer -->
+    <footer class="bg-black small text-center text-white-50">
+      <div class="container">
+            MoodList 2018
+      </div>
+    </footer>
+
+
+
+
+ <!-- Bootstrap core JavaScript -->
+ <script src="vendor/jquery/jquery.min.js"></script>
+ <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+ <!-- Plugin JavaScript -->
+ <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+ <!-- Custom scripts for this template -->
+ <script src="js/grayscale.min.js"></script>
+
+
+<!-- Firebase Reference -->
+<script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
+
+<!-- Moment.js Reference -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+
+
+
+<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script> -->
+<script src="https://apis.google.com/js/client.js?onload=googleApiClientReady"></script>
+
+
+ <script>
+
+     var searchTerm =" ";
+
+$(".dropdown-item").on("click", function(){
+ searchTerm =  $(this).text();
+ console.log(searchTerm);
+
+
+});
+
+       
+    // This is our API key
+     var APIKey = "AIzaSyDmgXXqRdCWOXlTpFwDZaWCNCDoDYc11T4";
+
+// Here we are building the URL we need to query the database
+var queryURL = "https://www.googleapis.com/youtube/v3/search?part=snippet&q=" + searchTerm + "&type=playlist&key=" + APIKey;
+
+// Here we run our AJAX call to the API
+$.ajax({
+  url: queryURL,
+  method: "GET"
+})
+  // We store all of the retrieved data inside of an object called "response"
+  .then(function(response) {
+
+        // Log the queryURL
+        console.log(queryURL);
+
+        // Log the resulting object
+        console.log(response);
+
+
+
+
+
+
+
+
+
+
+        var OAUTH2_CLIENT_ID = '__YOUR_CLIENT_ID__';
+        var OAUTH2_SCOPES = [
+        'https://www.googleapis.com/auth/youtube'
+        ];
+
+        // Upon loading, the Google APIs JS client automatically invokes this callback.
+        googleApiClientReady = function() {
+        gapi.auth.init(function() {
+            window.setTimeout(checkAuth, 1);
+        });
+        }
+
+        // Attempt the immediate OAuth 2.0 client flow as soon as the page loads.
+        // If the currently logged-in Google Account has previously authorized
+        // the client specified as the OAUTH2_CLIENT_ID, then the authorization
+        // succeeds with no user intervention. Otherwise, it fails and the
+        // user interface that prompts for authorization needs to display.
+        function checkAuth() {
+        gapi.auth.authorize({
+            client_id: OAUTH2_CLIENT_ID,
+            scope: OAUTH2_SCOPES,
+            immediate: true
+        }, handleAuthResult);
+        }
+
+        // Handle the result of a gapi.auth.authorize() call.
+        function handleAuthResult(authResult) {
+        if (authResult && !authResult.error) {
+            // Authorization was successful. Hide authorization prompts and show
+            // content that should be visible after authorization succeeds.
+            $('.pre-auth').hide();
+            $('.post-auth').show();
+            loadAPIClientInterfaces();
+        } else {
+            // Make the #login-link clickable. Attempt a non-immediate OAuth 2.0
+            // client flow. The current function is called when that flow completes.
+            $('#login-link').click(function() {
+            gapi.auth.authorize({
+                client_id: OAUTH2_CLIENT_ID,
+                scope: OAUTH2_SCOPES,
+                immediate: false
+                }, handleAuthResult);
+            });
+        }
+        }
+
+        // Load the client interfaces for the YouTube Analytics and Data APIs, which
+        // are required to use the Google APIs JS client. More info is available at
+        // https://developers.google.com/api-client-library/javascript/dev/dev_jscript#loading-the-client-library-and-the-api
+        function loadAPIClientInterfaces() {
+        gapi.client.load('youtube', 'v3', function() {
+            handleAPILoaded();
+        });
+        }
+
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+        // Define some variables used to remember state.
+var playlistId;
+
+// After the API loads, call a function to enable the playlist creation form.
+// function handleAPILoaded() {
+//   enableForm();
+// }
+
+// Enable the form for creating a playlist.
+// function enableForm() {
+//   $('.btn btn-secondary dropdown-toggle').attr('disabled', false);
+// }
+
+// Create a private playlist.
+function createPlaylist() {
+  var request = gapi.client.youtube.playlists.insert({
+    part: 'snippet,status',
+    resource: {
+      snippet: {
+        title: searchTerm,
+        description: 'A private playlist created with the YouTube API'
+      },
+      status: {
+        privacyStatus: 'private'
+      }
+    }
+  });
+  request.execute(function(response) {
+    var result = response.result;
+    if (result) {
+      playlistId = result.id;
+      //$('#playlist-id').val(playlistId);
+      console.log(playlistId);
+      $('#playlist-title').html(result.snippet.title);
+      $('#playlist-description').html(result.snippet.description);
+    } else {
+      $('#status').html('Could not create playlist');
+    }
+  });
+}
+ 
+ </script>
+
+  </body>
+
+</html>
