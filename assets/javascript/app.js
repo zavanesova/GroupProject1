@@ -1,7 +1,7 @@
-$('#dropdown a').on('click', function() {
+$('#channel-input').on('click', function() {
     var clientId = '7f7d8a472a82495cb135227ad7a595a1';
     var clientSecret = '23aba3d8f521463998673ac3ffbcb01c';
-    var moodSelect = $(this).text().toLowerCase();
+    var moodSelect = $(this).val().toLowerCase();
     var queryURL = 'https://api.spotify.com/v1/search?type=playlist&q=' + moodSelect + '&access_token=BQC2FS3HzkXjfzlWIunPeP00WkMxJujnhymqRL0RfQYvjNFaqEDQjJe8yoJzqLvcNYj9xULBH-NGupWZam1xF3NOA6F8M0KrUS91VpOMEvnM8d1QLDA1o6Y6zlcAMi7-44JgtGQ7djp-wUzzldbyWPKQ';
 
     console.log("mood:" + moodSelect);
