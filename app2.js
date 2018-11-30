@@ -1,8 +1,17 @@
+// Initialize Firebase
+var config = {
+    apiKey: "AIzaSyBq9g0wIZE9mw5II9BXZEouUvuKGOWbIK8",
+    authDomain: "moodlist-6736e.firebaseapp.com",
+    databaseURL: "https://moodlist-6736e.firebaseio.com",
+    projectId: "moodlist-6736e",
+    storageBucket: "moodlist-6736e.appspot.com",
+    messagingSenderId: "224635158925"
+  };
+  firebase.initializeApp(config);
+  var database = firebase.database();
+
 const app = {};
 var capturedPhoto;
-
-
-
 
 app.getArists = (artist) => $.ajax({
 	url: 'https://api.spotify.com/v1/search',
@@ -74,14 +83,17 @@ app.init = function() {
 				artists = artists.map(a => a[0].artists.items[0]);
 				console.log(artists);
 				app.getAlbums(artists);
-            });
-            
+			});
+        
             var clientId = '1182c78c1d1640bdb11753b2a466f09b';
             var clientSecret = 'cb0c0bcae4fb45dead4532baaa701f27';
             var moodSelect = $("input[type=search]").val().toLowerCase();
-            var token = 'BQD7xr_jxrqh4Ur-XjMt5wpdI1757mkPkUQ2QSYfmqrNSa0Rs6wV-JuJTE2BnHUmgo16vlMn7waXKM-Lq2TbHHyRuAYHRlTzcANsu0iMlHB8-DDpdt4zc7yUP8PZIG4Dj2KgMmCCtJS9ty7wVcDMn_-waQ';
+            var token = 'BQC65QoO1HT6X3mQuHd2MuZygJmzO8cqp0Z_Vdy1HaL2EqDKl_ZCk6euylfwrtyI4uczsSGwEmup1ijzjti_sWJeCGmG6y1YzhFESc7YeRksvWShAQBiGqA67MfcpdswM7EoAXhkdYQWBQq77YbWBL-y';
             var queryURL = 'https://api.spotify.com/v1/search?type=playlist&q=' + moodSelect + '&access_token=' + token;       
-            
+			
+			// database.ref('/mood-weather').push({
+			// 	moodSelect: moodSelect,
+			// });
             
             $.ajax({
                 url: queryURL,
@@ -95,7 +107,62 @@ app.init = function() {
 
 	});
 
+const appKey = "be4c40d5907c398252e381e788c398ff";
+
+let searchButton = document.getElementById("search-btn");
+let searchInput = document.getElementById("search-txt");
+let cityName = document.getElementById("city-name");
+let icon = document.getElementById("icon");
+let temperature = document.getElementById("temp");
+let humidity = document.getElementById("humidity-div");
+
+searchButton.addEventListener("click", findWeatherDetails);
+searchInput.addEventListener("keyup", enterPressed);
+
+database.ref('/mood-weather').push({
+	moodSelect: moodSelect,
+	temperature: temperature
+});
+
+
+function enterPressed(event) {
+  if (event.key === "Enter") {
+	findWeatherDetails();
+  }
 }
+
+function findWeatherDetails() {
+  if (searchInput.value === "") {
+  
+  }else {
+    let searchLink = "https://api.openweathermap.org/data/2.5/weather?q=" + searchInput.value + "&appid="+ appKey;
+   httpRequestAsync(searchLink, theResponse);
+  }
+ }
+
+function theResponse(response) {
+  let jsonObject = JSON.parse(response);
+  cityName.innerHTML = jsonObject.name;
+  icon.src = "http://openweathermap.org/img/w/" + jsonObject.weather[0].icon + ".png";
+  temperature.innerHTML = parseInt((jsonObject.main.temp - 273) * 9/5) + 32  + "°";
+  humidity.innerHTML = jsonObject.main.humidity + "%";
+  
+}
+
+function httpRequestAsync(url, callback)
+{
+  console.log("hello");
+    var httpRequest = new XMLHttpRequest();
+    httpRequest.onreadystatechange = () => { 
+        if (httpRequest.readyState == 4 && httpRequest.status == 200)
+            callback(httpRequest.responseText);
+    }
+    httpRequest.open("GET", url, true); // true for asynchronous 
+    httpRequest.send();
+}
+
+}
+
 
 const getDataObject = arr => arr[0].items;
 
@@ -109,4 +176,46 @@ function getRandomTracks(num, tracks) {
 
 $(app.init);
 
+$('#table').hide();
+$('#hide-previous-moods').hide();
+
+$('form').on('submit', function() {
+	anime({
+		targets: '.playlist',
+		translateX: [
+			{value: 200, duration: 100},
+			{value: 0, duration: 1000}
+		],
+		easing: 'easeInBack'
+	 });
+	});
+
+database.ref('/mood-weather').on("child_added", function(snapshot) {
+    var newMood = snapshot.val().moodSelect;
+    var newWeather = snapshot.val();
+
+    var newRow = $('<tr>').append(
+		$('<td>').text(newMood.charAt(0).toUpperCase() + newMood.slice(1).toLowerCase()),
+    );
+    $('#table-body').append(newRow);
+}, function(errorObject) {
+	console.log("Errors handled " + errorObject.code);
+});
+
+$('#previous-moods').on('click', function() {
+    $('#previous-moods').hide();
+    $('#hide-previous-moods').show();
+    $('table').show();
+    anime({
+        targets: 'table',
+        translateX: 0,
+        rotate: '1turn', 
+        duration: 700
+      });
+})
+$('#hide-previous-moods').on('click', function() {
+    $('#hide-previous-moods').hide();
+    $('#previous-moods').show();
+    $('table').hide();
+})
 
