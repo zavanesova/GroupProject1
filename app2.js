@@ -88,7 +88,7 @@ app.init = function() {
             var clientId = '1182c78c1d1640bdb11753b2a466f09b';
             var clientSecret = 'cb0c0bcae4fb45dead4532baaa701f27';
             var moodSelect = $("input[type=search]").val().toLowerCase();
-            var token = 'BQC068MBequByxr4gZx-I3dCfpPOb74MmV_nCtpz6jEZpwld2ZpkHQ7rJF_KMhLpmRPrjSUCNf26wCRA9t660vo4sK5b567pKquYfHNvGe2Amt3CDdsxJk9Gt_qt-7rtX5i9Ri7R9HF2UPaY0Dp5NQ7H';
+            var token = 'BQC65QoO1HT6X3mQuHd2MuZygJmzO8cqp0Z_Vdy1HaL2EqDKl_ZCk6euylfwrtyI4uczsSGwEmup1ijzjti_sWJeCGmG6y1YzhFESc7YeRksvWShAQBiGqA67MfcpdswM7EoAXhkdYQWBQq77YbWBL-y';
             var queryURL = 'https://api.spotify.com/v1/search?type=playlist&q=' + moodSelect + '&access_token=' + token;       
 			
 			// database.ref('/mood-weather').push({
