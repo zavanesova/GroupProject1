@@ -113,6 +113,7 @@ let cityName = document.getElementById("city-name");
 let icon = document.getElementById("icon");
 let temperature = document.getElementById("temp");
 let humidity = document.getElementById("humidity-div");
+let temp2 = "";
 
 searchButton.addEventListener("click", findWeatherDetails);
 searchInput.addEventListener("keyup", enterPressed);
@@ -139,7 +140,8 @@ function theResponse(response) {
   temperature.innerHTML = parseInt((jsonObject.main.temp - 273) * 9/5) + 32  + "°";
   humidity.innerHTML = jsonObject.main.humidity + "%";
 console.log(temperature);
-let temp2 = temperature.innerHTML;
+
+temp2 = temperature.innerHTML;
 
   database.ref('/mood-weather').push({
 	moodSelect: moodSelect,
@@ -189,17 +191,6 @@ $('form').on('submit', function() {
 	 });
 	});
 
-database.ref('/mood-weather').on("child_added", function(snapshot) {
-    var newMood = snapshot.val().moodSelect;
-    var newWeather = snapshot.val();
-
-    var newRow = $('<tr>').append(
-		$('<td>').text(newMood.charAt(0).toUpperCase() + newMood.slice(1).toLowerCase()),
-    );
-    $('#table-body').append(newRow);
-}, function(errorObject) {
-	console.log("Errors handled " + errorObject.code);
-});
 
 $('#previous-moods').on('click', function() {
     $('#previous-moods').hide();
@@ -218,3 +209,15 @@ $('#hide-previous-moods').on('click', function() {
     $('table').hide();
 })
 
+database.ref('/mood-weather').on("child_added", function(snapshot) {
+    var newMood = snapshot.val().moodSelect;
+    var newWeather = snapshot.val().temperature;
+
+    var newRow = $('<tr>').append(
+		$('<td>').text(newMood.charAt(0).toUpperCase() + newMood.slice(1).toLowerCase()),
+		$('<td>').text(newWeather)
+    );
+    $('#table-body').append(newRow);
+}, function(errorObject) {
+	console.log("Errors handled " + errorObject.code);
+});
