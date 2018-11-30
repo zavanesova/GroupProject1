@@ -69,6 +69,8 @@ app.createPlayList = function(songs) {
 	$('.playlist').append(`<iframe src="${baseUrl + songs}" height="400"></iframe>`);
 }
 
+var moodSelect = "";
+
 app.init = function() {
 	$('form').on('submit', function(e) {
 		e.preventDefault();
@@ -87,13 +89,9 @@ app.init = function() {
         
             var clientId = '1182c78c1d1640bdb11753b2a466f09b';
             var clientSecret = 'cb0c0bcae4fb45dead4532baaa701f27';
-            var moodSelect = $("input[type=search]").val().toLowerCase();
+            moodSelect = $("input[type=search]").val().toLowerCase();
             var token = 'BQC65QoO1HT6X3mQuHd2MuZygJmzO8cqp0Z_Vdy1HaL2EqDKl_ZCk6euylfwrtyI4uczsSGwEmup1ijzjti_sWJeCGmG6y1YzhFESc7YeRksvWShAQBiGqA67MfcpdswM7EoAXhkdYQWBQq77YbWBL-y';
             var queryURL = 'https://api.spotify.com/v1/search?type=playlist&q=' + moodSelect + '&access_token=' + token;       
-			
-			// database.ref('/mood-weather').push({
-			// 	moodSelect: moodSelect,
-			// });
             
             $.ajax({
                 url: queryURL,
@@ -119,12 +117,6 @@ let humidity = document.getElementById("humidity-div");
 searchButton.addEventListener("click", findWeatherDetails);
 searchInput.addEventListener("keyup", enterPressed);
 
-database.ref('/mood-weather').push({
-	moodSelect: moodSelect,
-	temperature: temperature
-});
-
-
 function enterPressed(event) {
   if (event.key === "Enter") {
 	findWeatherDetails();
@@ -146,6 +138,13 @@ function theResponse(response) {
   icon.src = "http://openweathermap.org/img/w/" + jsonObject.weather[0].icon + ".png";
   temperature.innerHTML = parseInt((jsonObject.main.temp - 273) * 9/5) + 32  + "°";
   humidity.innerHTML = jsonObject.main.humidity + "%";
+console.log(temperature);
+let temp2 = temperature.innerHTML;
+
+  database.ref('/mood-weather').push({
+	moodSelect: moodSelect,
+	temperature: temp2
+});
   
 }
 
