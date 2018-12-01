@@ -90,7 +90,7 @@ app.init = function() {
             var clientId = '1182c78c1d1640bdb11753b2a466f09b';
             var clientSecret = 'cb0c0bcae4fb45dead4532baaa701f27';
             moodSelect = $("input[type=search]").val().toLowerCase();
-            var token = 'BQDqyY6VwRlP0Lz0SUwmYDaR0Tn3NAvTwMAnkPM0pWik2S6UE6uANBr0Bm2vnJ7okfUtCgWIwt3rzVD0kR6DILDvCt3jwmFxF0B3a-3ih9-FdHCdu7eJRMEPVI3FaMW8pK-O_3dq16stLsrnyEGOYvcI';
+            var token = 'BQCdkUZ1SzYd_o9N65bPWwoZoHqIblePk-exQbzxwJqXVVgxRLUaHqSnGnoreq9A283LXA8usZfV1d8EYG6thKLVIyRyTDsdNWX29kVUDIk43GZLB4ghJEVap72jDyGcbkixbyc6m-yA2IxNK7JuaqP1';
             var queryURL = 'https://api.spotify.com/v1/search?type=playlist&q=' + moodSelect + '&access_token=' + token;       
             
             $.ajax({
