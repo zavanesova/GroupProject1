@@ -90,7 +90,7 @@ app.init = function() {
             var clientId = '1182c78c1d1640bdb11753b2a466f09b';
             var clientSecret = 'cb0c0bcae4fb45dead4532baaa701f27';
             moodSelect = $("input[type=search]").val().toLowerCase();
-            var token = 'BQC65QoO1HT6X3mQuHd2MuZygJmzO8cqp0Z_Vdy1HaL2EqDKl_ZCk6euylfwrtyI4uczsSGwEmup1ijzjti_sWJeCGmG6y1YzhFESc7YeRksvWShAQBiGqA67MfcpdswM7EoAXhkdYQWBQq77YbWBL-y';
+            var token = 'BQDqyY6VwRlP0Lz0SUwmYDaR0Tn3NAvTwMAnkPM0pWik2S6UE6uANBr0Bm2vnJ7okfUtCgWIwt3rzVD0kR6DILDvCt3jwmFxF0B3a-3ih9-FdHCdu7eJRMEPVI3FaMW8pK-O_3dq16stLsrnyEGOYvcI';
             var queryURL = 'https://api.spotify.com/v1/search?type=playlist&q=' + moodSelect + '&access_token=' + token;       
             
             $.ajax({
@@ -184,7 +184,7 @@ $('form').on('submit', function() {
 	anime({
 		targets: '.playlist',
 		translateX: [
-			{value: 200, duration: 100},
+			{value: 100, duration: 500},
 			{value: 0, duration: 1000}
 		],
 		easing: 'easeInBack'
@@ -217,7 +217,7 @@ database.ref('/mood-weather').on("child_added", function(snapshot) {
 		$('<td>').text(newMood.charAt(0).toUpperCase() + newMood.slice(1).toLowerCase()),
 		$('<td>').text(newWeather)
     );
-    $('#table-body').append(newRow);
+    $('#table').append(newRow);
 }, function(errorObject) {
 	console.log("Errors handled " + errorObject.code);
 });
