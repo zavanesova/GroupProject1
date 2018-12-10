@@ -13,6 +13,7 @@ var config = {
 const app = {};
 var capturedPhoto;
 
+//Spotify API
 app.getArists = (artist) => $.ajax({
 	url: 'https://api.spotify.com/v1/search',
 	method: 'GET',
@@ -69,6 +70,7 @@ app.createPlayList = function(songs) {
 	$('.playlist').append(`<iframe src="${baseUrl + songs}" height="400"></iframe>`);
 }
 
+//moodSelect will be determined by the user input
 var moodSelect = "";
 
 app.init = function() {
@@ -89,9 +91,11 @@ app.init = function() {
         
             var clientId = '1182c78c1d1640bdb11753b2a466f09b';
             var clientSecret = 'cb0c0bcae4fb45dead4532baaa701f27';
-            moodSelect = $("input[type=search]").val().toLowerCase();
-            var token = 'BQCdkUZ1SzYd_o9N65bPWwoZoHqIblePk-exQbzxwJqXVVgxRLUaHqSnGnoreq9A283LXA8usZfV1d8EYG6thKLVIyRyTDsdNWX29kVUDIk43GZLB4ghJEVap72jDyGcbkixbyc6m-yA2IxNK7JuaqP1';
-            var queryURL = 'https://api.spotify.com/v1/search?type=playlist&q=' + moodSelect + '&access_token=' + token;       
+			moodSelect = $("input[type=search]").val().toLowerCase();
+			//Token expires after an hour, need server side to get a refresh token
+			//Will update
+            var token = 'BQDGTuJPzlDteYtUIUo6L9B0TlxtdiYZ0eRLl_b0zYf8yStsac_zCek61qz5t4BAUuW_YzCHcdtJXsCKIXxuQ0LV3KX3dvc_Lu0LVpYLwCabLHWcKvmIUA0s583i_TiUf5X8YiuqbD3CI_weHO6Elx41';
+			var queryURL = 'https://api.spotify.com/v1/search?type=playlist&q=' + moodSelect + '&access_token=' + token;      
             
             $.ajax({
                 url: queryURL,
@@ -104,7 +108,7 @@ app.init = function() {
           })
 
 	});
-
+//OpenWeatherMapAPI
 const appKey = "be4c40d5907c398252e381e788c398ff";
 
 let searchButton = document.getElementById("search-btn");
@@ -143,6 +147,7 @@ console.log(temperature);
 
 temp2 = temperature.innerHTML;
 
+//Logging mood and temperature to firebase
   database.ref('/mood-weather').push({
 	moodSelect: moodSelect,
 	temperature: temp2
@@ -177,9 +182,11 @@ function getRandomTracks(num, tracks) {
 
 $(app.init);
 
+//Table that holds previous moods/weather stats
 $('#table').hide();
 $('#hide-previous-moods').hide();
 
+//Anime.js animation to move playlist as it renders.
 $('form').on('submit', function() {
 	anime({
 		targets: '.playlist',
@@ -195,7 +202,7 @@ $('form').on('submit', function() {
 $('#previous-moods').on('click', function() {
     $('#previous-moods').hide();
     $('#hide-previous-moods').show();
-    $('table').show();
+	$('table').show();
     anime({
         targets: 'table',
         translateX: 0,
@@ -209,6 +216,7 @@ $('#hide-previous-moods').on('click', function() {
     $('table').hide();
 })
 
+//Appending the previous moods table as new moods/weather is logged to firebase
 database.ref('/mood-weather').on("child_added", function(snapshot) {
     var newMood = snapshot.val().moodSelect;
     var newWeather = snapshot.val().temperature;
